@@ -67,6 +67,19 @@ function App() {
         }
     }
 
+    function changeTaskTitle(id: string, title: string, todolistId: string) {
+        //достанем нужный массив по todolistId:
+        let todolistTasks = tasks[todolistId];
+        // найдём нужную таску:
+        let task = todolistTasks.find(t => t.id === id);
+        //изменим таску, если она нашлась
+        if (task) {
+            task.title = title;
+            // засетаем в стейт копию объекта, чтобы React отреагировал перерисовкой
+            setTasks({...tasks});
+        }
+    }
+
     function changeFilter(value: FilterValuesType, todolistId: string) {
         let todolist = todolists.find(tl => tl.id === todolistId)
         if (todolist) {
@@ -90,19 +103,28 @@ function App() {
         setTasks({...tasks, [newTodoListID]: []})
     }
 
+    function changeTodolistTitle(id: string, title: string) {
+        const todolist = todolists.find(tl => tl.id === id)
+        if (todolist) {
+            todolist.title = title
+            setTodolists([...todolists])
+        }
+    }
+
     return (
         <div className="App">
-            <AddItemForm addItem={addTodoList} />
+            <AddItemForm addItem={addTodoList}/>
             {
                 todolists.map((tl) => {
 
-                    let tasksForTodolist = tasks[tl.id];
+                    let allTodolistTasks = tasks[tl.id];
+                    let tasksForTodolist = allTodolistTasks;
 
                     if (tl.filter === "active") {
-                        tasksForTodolist = tasksForTodolist.filter(t => t.isDone === false);
+                        tasksForTodolist = allTodolistTasks.filter(t => t.isDone === false);
                     }
                     if (tl.filter === "completed") {
-                        tasksForTodolist = tasksForTodolist.filter(t => t.isDone === true);
+                        tasksForTodolist = allTodolistTasks.filter(t => t.isDone === true);
                     }
                     return <Todolist
                         key={tl.id}
@@ -115,6 +137,8 @@ function App() {
                         changeTaskStatus={changeStatus}
                         filter={tl.filter}
                         removeTodolist={removeTodolist}
+                        changeTaskTitle={changeTaskTitle}
+                        changeTodoListTitle={changeTodolistTitle}
                     />
                 })}
         </div>
