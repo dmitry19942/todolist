@@ -1,43 +1,53 @@
 import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
+import {IconButton, TextField} from "@material-ui/core";
+import {AddBox} from "@material-ui/icons";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
 
 export function AddItemForm(props: AddItemFormPropsType) {
-    let [title, setTitle] = useState<string>("")
-    let [error, setError] = useState<string | null>(null)
+    let [newTaskTitle, setNewTaskTitle] = useState<string>("")
+    let [error, setError] = useState<boolean>(false)
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
+        setError(false)
+        setNewTaskTitle(e.currentTarget.value)
     }
 
-    const addItem = () => {
-        let newTitle = title.trim();
-        if (newTitle !== "") {
-            props.addItem(newTitle);
-            setTitle("");
+    const addTask = () => {
+        if (newTaskTitle.trim() !== '') {
+            props.addItem(newTaskTitle.trim());
         } else {
-            setError("Title is required");
-            setTitle('')
+            setError(true);
         }
+        setNewTaskTitle('')
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null);
-        if (e.charCode === 13) {
-            addItem();
+        if (e.key === 'Enter') {
+            addTask();
         }
     }
-    return(
+
+    return (
         <div>
-            <input value={title}
-                   onChange={onChangeHandler}
-                   onKeyPress={onKeyPressHandler}
-                   className={error ? "error" : ""}
+            <TextField
+                value={newTaskTitle}
+                onChange={onChangeHandler}
+                onKeyPress={onKeyPressHandler}
+                size={'small'}
+                error={error}
+                helperText={error && 'Title is required!'}
+                label={'Title'}
+                variant={'outlined'}
             />
-            <button onClick={addItem}>+</button>
-            {error && <div className="error-message">{error}</div>}
+            <IconButton
+                onClick={addTask}
+                color={'primary'}
+            >
+                <AddBox/>
+            </IconButton>
         </div>
     )
 }
