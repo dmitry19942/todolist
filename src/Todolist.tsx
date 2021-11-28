@@ -22,7 +22,7 @@ type PropsType = {
     changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void
     removeTodolist: (todolistId: string) => void
     changeTaskTitle: (id: string, title: string, todolistId: string) => void
-    changeTodoListTitle: (id: string, title: string) => void
+    changeTodolistTitle: (id: string, title: string) => void
 }
 
 export function Todolist(props: PropsType) {
@@ -33,7 +33,7 @@ export function Todolist(props: PropsType) {
 
     const removeTodolist = () => props.removeTodolist(props.id)
     const addTask = (title: string) => props.addTask(title, props.id)
-    const changeTodoListTitle = (title: string) => props.changeTodoListTitle(props.id, title)
+    const changeTodoListTitle = (title: string) => props.changeTodolistTitle(props.id, title)
 
     return <div>
         <h3>
