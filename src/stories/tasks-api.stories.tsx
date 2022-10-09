@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 
-import {taskAPI} from "../api/task-api";
+import {taskAPI, TaskPriorities, TaskStatuses} from "../api/task-api";
 
 export default {
     title: 'API'
@@ -63,8 +63,13 @@ export const UpdateTask = () => {
     const [todolistId, setTodolistId] = useState<string>('')
     const [taskId, setTaskId] = useState<string>('')
     const [taskTitle, setTaskTitle] = useState<string>('')
+    const [status, setStatus] = useState<TaskStatuses>(0)
+    const [priority, setPriority] = useState<TaskPriorities>(0)
+    const [startDate, setStartDate] = useState<string>('')
+    const [deadline, setDeadline] = useState<string>('')
+    const [description, setDescription] = useState<string>('')
     const updateTask = () => {
-        taskAPI.updateTask(todolistId, taskId, {title: taskTitle})
+        taskAPI.updateTask(todolistId, taskId, {title: taskTitle, status: status, priority: priority, startDate: startDate, deadline: deadline, description: description })
             .then((res) => {
                 setState(res.data)
             })
