@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useState} from 'react'
 
 import {taskAPI, TaskPriorities, TaskStatuses} from "../api/task-api";
 
