@@ -15,7 +15,6 @@ import { Menu } from '@mui/icons-material';
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 
 
-
 function App() {
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
 
