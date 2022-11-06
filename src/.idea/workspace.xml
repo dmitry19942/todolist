@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="6d46e7c1-a52a-4f3e-bc35-d71d54731a61" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/AddItemForm.stories.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AddItemForm.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppWithReducers.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppWithRedux.stories.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppWithRedux.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/EditableSpan.stories.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/EditableSpan.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task.stories.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Todolist.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/App.stories.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/AddItemForm/AddItemForm.stories.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/EditableSpan/EditableSpan.stories.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/state/store.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/state/tasks-reducer.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/state/tasks-reducer.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/state/todolists-reducer.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/state/todolists-reducer.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/state/todolists-tasks-reducer.test.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stories/Button.stories.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stories/Button.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stories/Header.stories.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stories/Header.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stories/Introduction.stories.mdx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stories/Page.stories.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stories/Page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stories/assets/code-brackets.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stories/assets/colors.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stories/assets/comments.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stories/assets/direction.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stories/assets/flow.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stories/assets/plugin.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stories/assets/repo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stories/assets/stackalt.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stories/button.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stories/decorators/ReduxStoreProviderDecorator.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stories/header.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stories/page.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stories/tasks-api.stories.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/stories/todolists-api.stories.tsx" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="2HBpYKS7WcOLkBV2CBnMs0cTPI9" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6d46e7c1-a52a-4f3e-bc35-d71d54731a61" name="Changes" comment="" />
+      <created>1667768383297</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1667768383297</updated>
+      <workItem from="1667768384604" duration="5000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
