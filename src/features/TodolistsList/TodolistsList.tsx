@@ -9,11 +9,11 @@ import {
     TodolistDomainType, updateTitleTodolistTC
 } from "./todolists-reducer";
 import {addTaskTC, removeTaskTC, TasksStateType, updateTaskTC} from "./tasks-reducer";
-import {TaskStatuses} from "../../api/task-api";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {Todolist} from "./Todolist/Todolist";
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import {TaskStatuses} from "../../api/todolist-api";
 
 
 export const TodolistsList: React.FC = () => {
