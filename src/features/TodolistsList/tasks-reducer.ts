@@ -1,4 +1,9 @@
-import {AddTodolistActionType, RemoveTodolistActionType, SetTodolistsActionType} from "./todolists-reducer";
+import {
+    AddTodolistActionType,
+    ClearTodolistDataActionType,
+    RemoveTodolistActionType,
+    SetTodolistsActionType
+} from "./todolists-reducer";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "../../app/store";
 import {RequestStatusType, setAppErrorAC, setAppStatusAC} from "../../app/app-reducer";
@@ -26,6 +31,7 @@ type ActionsType =
     | ReturnType<typeof setAppStatusAC>
     | ReturnType<typeof setAppErrorAC>
     | ReturnType<typeof changeTaskEntityStatusAC>
+    | ClearTodolistDataActionType
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
@@ -58,6 +64,8 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Actio
             return {...state, [action.todolistId]: action.tasks}
         case "CHANGE-TASK-ENTITY-STATUS":
             return {...state, [action.todolistId]: state[action.todolistId].map(t => t.id === action.taskId ? {...t, entityStatus: action.entityStatus} : t)}
+        case "CLEAR-DATA":
+            return {}
         default:
             return state;
     }
@@ -81,6 +89,9 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<ActionsT
             const tasks = res.data.items
             dispatch(setTasksAC(todolistId, tasks))
             dispatch(setAppStatusAC('succeeded'))
+        })
+        .catch((error) => {
+            handleServerNetworkError(error, dispatch)
         })
 }
 export const removeTaskTC = (todolistId: string, taskId: string) => (dispatch: Dispatch<ActionsType>) => {

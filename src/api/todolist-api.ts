@@ -53,6 +53,11 @@ export type UpdateTaskModelType = {
     startDate: string | null
     deadline: string | null
 }
+type GetAuthMeType = {
+    id: number
+    email: string
+    login: string
+}
 
 // instance
 const instance = axios.create({
@@ -93,4 +98,23 @@ export const todolistAPI = {
         return instance.put<UpdateTaskModelType, AxiosResponse<ResponseType<{ item: TaskType }>>>(
             `todo-lists/${todolistId}/tasks/${taskId}`, model)
     },
+}
+
+export type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha?: string
+}
+
+export const authAPI = {
+    login(payload: LoginParamsType) {
+        return instance.post<LoginParamsType, AxiosResponse<ResponseType<{ userId?: number }>>>('auth/login', payload)
+    },
+    logout() {
+        return instance.delete<ResponseType>('auth/login')
+    },
+    me() {
+        return instance.get<ResponseType<GetAuthMeType>>('auth/me')
+    }
 }
