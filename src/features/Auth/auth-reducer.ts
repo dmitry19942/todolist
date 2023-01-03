@@ -6,7 +6,7 @@ import {clearTodolistDataAC, ClearTodolistDataActionType} from "../TodolistsList
 
 // types
 type InitialStateType = typeof initialState
-type ActionsType =
+export type AuthActionsType =
     | ReturnType<typeof setIsLoggedInAC>
     | ReturnType<typeof setAppStatusAC>
     | ClearTodolistDataActionType
@@ -16,7 +16,7 @@ const initialState = {
     isLoggedIn: false
 }
 
-export const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+export const authReducer = (state: InitialStateType = initialState, action: AuthActionsType): InitialStateType => {
     switch (action.type) {
         case "login/SET-IS-LOGGED-IN":
             return {...state, isLoggedIn: action.value}
@@ -32,7 +32,7 @@ export const setIsLoggedInAC  = (value: boolean) =>
 
 // thunks
 
-export const loginTC = (payload: LoginParamsType) => (dispatch: Dispatch<ActionsType>) => {
+export const loginTC = (payload: LoginParamsType) => (dispatch: Dispatch<AuthActionsType>) => {
     dispatch(setAppStatusAC('loading'))
     authAPI.login(payload)
         .then((res) => {
@@ -48,7 +48,7 @@ export const loginTC = (payload: LoginParamsType) => (dispatch: Dispatch<Actions
         })
 }
 
-export const logoutTC = () => (dispatch: Dispatch<ActionsType>) => {
+export const logoutTC = () => (dispatch: Dispatch<AuthActionsType>) => {
     dispatch(setAppStatusAC('loading'))
     authAPI.logout()
         .then((res) => {

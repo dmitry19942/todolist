@@ -16,11 +16,10 @@ import Paper from '@mui/material/Paper';
 import {TaskStatuses} from "../../api/todolist-api";
 import {Navigate} from 'react-router-dom'
 
-
 export const TodolistsList: React.FC = () => {
 
-    const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>( state => state.todolists )
-    const tasks = useSelector<AppRootStateType, TasksStateType>( state => state.tasks )
+    const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
+    const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
     const dispatch = useDispatch()
@@ -66,11 +65,11 @@ export const TodolistsList: React.FC = () => {
     }, [])
 
     if (!isLoggedIn) {
-        return <Navigate to={'/login'} />
+        return <Navigate to={'/login'}/>
     }
     return <>
         <Grid container style={{padding: "20px"}}>
-            <AddItemForm addItem={addTodolist} />
+            <AddItemForm addItem={addTodolist}/>
         </Grid>
         <Grid container spacing={3}>
             {

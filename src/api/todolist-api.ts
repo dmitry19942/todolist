@@ -24,7 +24,6 @@ export enum TaskPriorities {
     Low = 0,
     Middle = 1,
     Hi = 2,
-    Urgently = 3,
     Later = 4
 }
 export type TaskType = {
@@ -58,6 +57,12 @@ type GetAuthMeType = {
     email: string
     login: string
 }
+export type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha?: string
+}
 
 // instance
 const instance = axios.create({
@@ -74,42 +79,36 @@ export const todolistAPI = {
         return instance.get<Array<TodolistType>>('todo-lists')
     },
     createTodolist(title: string) {
-        return instance.post<{title: string}, AxiosResponse<ResponseType<{item: TodolistType}>>>('todo-lists',
-            { title: title })
+        return instance.post<{ title: string }, AxiosResponse<ResponseType<{ item: TodolistType }>>>('todo-lists',
+            {title: title})
     },
     deleteTodolist(todolistId: string) {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}`)
     },
     updateTodolist(todolistId: string, title: string) {
         return instance.put<{ title: string }, AxiosResponse<ResponseType>>(`todo-lists/${todolistId}`,
-            { title: title })
+            {title: title})
     },
     getTask(todolistId: string) {
         return instance.get<GetTasksResponseType>(`todo-lists/${todolistId}/tasks`)
     },
     createTask(todolistId: string, taskTitle: string) {
-        return instance.post<{ title: string }, AxiosResponse<ResponseType<{ item: TaskType }>>>(`todo-lists/${todolistId}/tasks`,
-            { title: taskTitle })
+        return instance.post<{ title: string }, AxiosResponse<ResponseType<{ item: TaskType }>>>(
+            `todo-lists/${todolistId}/tasks`, {title: taskTitle})
     },
     deleteTask(todolistId: string, taskId: string) {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
-    updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType ) {
+    updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
         return instance.put<UpdateTaskModelType, AxiosResponse<ResponseType<{ item: TaskType }>>>(
             `todo-lists/${todolistId}/tasks/${taskId}`, model)
     },
 }
 
-export type LoginParamsType = {
-    email: string
-    password: string
-    rememberMe: boolean
-    captcha?: string
-}
-
 export const authAPI = {
     login(payload: LoginParamsType) {
-        return instance.post<LoginParamsType, AxiosResponse<ResponseType<{ userId?: number }>>>('auth/login', payload)
+        return instance.post<LoginParamsType, AxiosResponse<ResponseType<{ userId?: number }>>>(
+            'auth/login', payload)
     },
     logout() {
         return instance.delete<ResponseType>('auth/login')

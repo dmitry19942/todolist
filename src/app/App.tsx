@@ -16,7 +16,7 @@ import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 import {Login} from "../features/Auth/Login";
 import {Routes, Route, Navigate} from 'react-router-dom'
 import {CircularProgress} from "@mui/material";
-import {logoutTC} from "../features/Auth/auth-reducer";
+import { logoutTC } from '../features/Auth/auth-reducer';
 
 
 function App() {
@@ -43,7 +43,7 @@ function App() {
 
     return (
         <div className="App">
-            <ErrorSnackbar />
+            <ErrorSnackbar/>
             <AppBar position="static">
                 <Toolbar>
                     <IconButton edge="start" color="inherit" aria-label="menu">
@@ -52,10 +52,10 @@ function App() {
                     <Typography variant="h6">
                         News
                     </Typography>
-                    { !isLoggedIn && <Button color="inherit">Login</Button> }
-                    { isLoggedIn && <Button color='inherit' onClick={logoutHandler}>Logout</Button> }
+                    {!isLoggedIn && <Button color="inherit">Login</Button>}
+                    {isLoggedIn && <Button color='inherit' onClick={logoutHandler}>Logout</Button>}
                 </Toolbar>
-                {status === 'loading' && <LinearProgress />}
+                {status === 'loading' && <LinearProgress/>}
             </AppBar>
             <Container fixed>
                 <Routes>

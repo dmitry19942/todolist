@@ -2,7 +2,6 @@ import {changeTaskEntityStatusAC, removeTaskAC, tasksReducer, TasksStateType, up
 import {addTodolistAC, removeTodolistAC} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses} from "../../api/todolist-api";
 
-
 let startState: TasksStateType = {}
 beforeEach(() => {
     startState = {
@@ -22,7 +21,6 @@ beforeEach(() => {
 test('correct task should be deleted from correct array', () => {
 
     const action = removeTaskAC("2", "todolistId2");
-
     const endState = tasksReducer(startState, action)
 
     expect(endState).toEqual({
@@ -42,7 +40,6 @@ test('correct task should be deleted from correct array', () => {
 test('status of specified task should be changed', () => {
 
     const action = updateTaskAC("2", {status: TaskStatuses.New}, "todolistId2");
-
     const endState = tasksReducer(startState, action)
 
     expect(endState['todolistId1'][1].status).toBe(TaskStatuses.Completed);
@@ -52,7 +49,6 @@ test('status of specified task should be changed', () => {
 test('title of specified task should be changed', () => {
 
     const action = updateTaskAC("2", {title: 'sugar'}, "todolistId2");
-
     const endState = tasksReducer(startState, action)
 
     expect(endState['todolistId1'][1].title).toBe("JS");
@@ -86,7 +82,6 @@ test('property with todolistId should be deleted', () => {
 test('entityStatus of specified task should be changed', () => {
 
     const action = changeTaskEntityStatusAC("todolistId2", '2', "loading");
-
     const endState = tasksReducer(startState, action)
 
     expect(endState['todolistId1'][1].entityStatus).toBe("idle");

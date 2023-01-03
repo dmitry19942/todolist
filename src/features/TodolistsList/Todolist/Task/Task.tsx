@@ -12,11 +12,13 @@ type TaskPropsType = {
     task: TaskType
     todolistId: string
 }
+
 export const Task = React.memo ((props: TaskPropsType) => {
     const onClickHandler = () => props.removeTask(props.task.id, props.todolistId)
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         let newIsDoneValue = e.currentTarget.checked;
-        props.changeTaskStatus(props.task.id, newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New, props.todolistId);
+        props.changeTaskStatus(props.task.id, newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New,
+            props.todolistId);
     }
     const onTitleChangeHandler = useCallback ((newValue: string) => {
         props.changeTaskTitle(props.task.id, newValue, props.todolistId);
@@ -29,7 +31,6 @@ export const Task = React.memo ((props: TaskPropsType) => {
             onChange={onChangeHandler}
             disabled={props.task.entityStatus === 'loading'}
         />
-
         <EditableSpan title={props.task.title} changeTitle={onTitleChangeHandler} disabled={props.task.entityStatus === 'loading'} />
         <IconButton onClick={onClickHandler} disabled={props.task.entityStatus === 'loading'}>
             <Delete/>
