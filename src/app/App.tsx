@@ -2,7 +2,7 @@ import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./store";
+import {AppStateType} from "./store";
 import {initializeAppTC, RequestStatusType} from "./app-reducer";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -26,9 +26,9 @@ function App() {
         dispatch(initializeAppTC())
     }, [])
 
-    const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
-    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+    const status = useSelector<AppStateType, RequestStatusType>((state) => state.app.status)
+    const isInitialized = useSelector<AppStateType, boolean>(state => state.app.isInitialized)
+    const isLoggedIn = useSelector<AppStateType, boolean>(state => state.auth.isLoggedIn)
 
     const logoutHandler = useCallback(() => {
         dispatch(logoutTC())

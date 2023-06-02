@@ -1,9 +1,11 @@
-import {applyMiddleware, combineReducers, legacy_createStore as createStore} from "redux";
+import {AnyAction, combineReducers} from "redux";
 import {TasksActionsType, tasksReducer} from "../features/TodolistsList/tasks-reducer";
 import {TodolistsActionsType, todolistsReducer} from "../features/TodolistsList/todolists-reducer";
 import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {ActionsType, appReducer} from "./app-reducer";
-import {authReducer, AuthActionsType} from "../features/Auth/auth-reducer";
+import {authReducer} from "../features/Auth/auth-reducer";
+import {configureStore} from "@reduxjs/toolkit";
+import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 
 
 const rootReducer = combineReducers({
@@ -13,12 +15,22 @@ const rootReducer = combineReducers({
     auth: authReducer
 })
 
-export const store = createStore(rootReducer, applyMiddleware(thunk))
+export const store = configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunk)
+})
 
-type AppActionsType = AuthActionsType | ActionsType | TasksActionsType | TodolistsActionsType
-export type AppRootStateType = ReturnType<typeof store.getState>
-export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, AppActionsType>
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionsType>
+
+// export type AppRootStateType = ReturnType<typeof store.getState>
+// export type AppDispatch = ThunkDispatch<AppRootStateType, unknown, AppActionsType>
+// export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionsType>
+
+export type AppStateType = ReturnType<typeof store.getState>
+export type AppDispatch=typeof store.dispatch
+export const useAppDispatch: () => AppDispatch = useDispatch
+export type AppThunkDispatch = ThunkDispatch<AppStateType, unknown, AnyAction>
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, AnyAction>
+export const useAppSelector: TypedUseSelectorHook<AppStateType> = useSelector
 
 // @ts-ignore
 window.store = store
