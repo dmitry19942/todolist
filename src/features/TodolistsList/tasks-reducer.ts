@@ -45,15 +45,15 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Tasks
             return {...state, [action.task.todoListId]: [action.task, ...state[action.task.todoListId]]}
         case 'TASKS/UPDATE-TASK':
             return {...state, [action.todolistId]: state[action.todolistId].map(t => t.id === action.taskId ? {...t, ...action.domainModel} : t)}
-        case 'TODOLISTS/ADD-TODOLIST':
-            return {...state, [action.todolist.id]: []}
-        case 'TODOLISTS/REMOVE-TODOLIST':
+        case 'todolists/addTodolistAC':
+            return {...state, [action.payload.todolist.id]: []}
+        case 'todolists/removeTodolistAC':
             const copyState = {...state};
-            delete copyState[action.todolistId];
+            delete copyState[action.payload.todolistId];
             return copyState;
-        case 'TODOLISTS/SET-TODOLISTS': {
+        case 'todolists/setTodolistsAC': {
             const stateCopy = {...state}
-            action.todolists.forEach((tl) => {
+            action.payload.todolists.forEach((tl) => {
                 stateCopy[tl.id] = []
             })
             return stateCopy
@@ -62,7 +62,7 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Tasks
             return {...state, [action.todolistId]: action.tasks}
         case "TASKS/CHANGE-TASK-ENTITY-STATUS":
             return {...state, [action.todolistId]: state[action.todolistId].map(t => t.id === action.taskId ? {...t, entityStatus: action.entityStatus} : t)}
-        case "TODOLISTS/CLEAR-DATA":
+        case "todolists/clearTodolistDataAC":
             return {}
         default:
             return state;
