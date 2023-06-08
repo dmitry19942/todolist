@@ -11,10 +11,6 @@ export type TodolistDomainType = TodolistType & {
     filter: FilterValuesType,
     entityStatus: RequestStatusType
 }
-export type AddTodolistActionType = ReturnType<typeof addTodolistAC>
-export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>
-export type SetTodolistsActionType = ReturnType<typeof setTodolistsAC>
-export type ClearTodolistDataActionType = ReturnType<typeof clearTodolistDataAC>
 
 //state
 const initialState: Array<TodolistDomainType> = []
