@@ -1,9 +1,9 @@
 import {Dispatch} from "redux";
-import {setAppStatusAC} from "../../app/app-reducer";
 import {authAPI, LoginParamsType} from "../../api/todolist-api";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
-import {clearTodolistDataAC} from "../TodolistsList/todolists-reducer";
+import {todolistsActions} from "../TodolistsList/todolists-reducer";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {appActions} from "../../app/app-reducer";
 
 //state
 const initialState = {
@@ -21,17 +21,17 @@ const slice = createSlice({
 })
 
 export const authReducer = slice.reducer
-export const {setIsLoggedInAC} = slice.actions
+export const authActions = slice.actions
 
 // thunks
 
 export const loginTC = (payload: LoginParamsType) => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC({status: 'loading'}))
+    dispatch(appActions.setAppStatusAC({status: 'loading'}))
     authAPI.login(payload)
         .then((res) => {
             if (res.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC({value: true}))
-                dispatch(setAppStatusAC({status: 'succeeded'}))
+                dispatch(authActions.setIsLoggedInAC({value: true}))
+                dispatch(appActions.setAppStatusAC({status: 'succeeded'}))
             } else {
                 handleServerAppError(res.data, dispatch)
             }
@@ -42,13 +42,13 @@ export const loginTC = (payload: LoginParamsType) => (dispatch: Dispatch) => {
 }
 
 export const logoutTC = () => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC({status: 'loading'}))
+    dispatch(appActions.setAppStatusAC({status: 'loading'}))
     authAPI.logout()
         .then((res) => {
             if (res.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC({value: false}))
-                dispatch(setAppStatusAC({status: 'succeeded'}))
-                dispatch(clearTodolistDataAC())
+                dispatch(authActions.setIsLoggedInAC({value: false}))
+                dispatch(appActions.setAppStatusAC({status: 'succeeded'}))
+                dispatch(todolistsActions.clearTodolistDataAC())
             } else {
                 handleServerAppError(res.data, dispatch)
             }
