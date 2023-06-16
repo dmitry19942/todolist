@@ -1,7 +1,7 @@
 import {todolistAPI, TodolistType} from "../../api/todolist-api";
 import {appActions, RequestStatusType} from "../../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
-import {fetchTasks} from "./tasks-reducer";
+import {tasksThunks} from "./tasks-reducer";
 import {AppDispatch, AppThunk} from "../../app/store";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
@@ -64,7 +64,7 @@ export const fetchTodolistsTC = (): AppThunk => (dispatch: AppDispatch) => {
         })
         .then((todos) => {
             todos.forEach((tl) => {
-                dispatch(fetchTasks(tl.id))
+                dispatch(tasksThunks.fetchTasks(tl.id))
             })
         })
         .catch((error) => {

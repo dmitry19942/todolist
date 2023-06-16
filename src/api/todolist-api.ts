@@ -63,6 +63,10 @@ export type LoginParamsType = {
     rememberMe: boolean
     captcha?: string
 }
+export type AddTaskArgType = {
+    todolistId: string
+    title: string
+}
 
 // instance
 const instance = axios.create({
@@ -92,9 +96,9 @@ export const todolistAPI = {
     getTask(todolistId: string) {
         return instance.get<GetTasksResponseType>(`todo-lists/${todolistId}/tasks`)
     },
-    createTask(todolistId: string, taskTitle: string) {
+    createTask(arg: AddTaskArgType) {
         return instance.post<{ title: string }, AxiosResponse<ResponseType<{ item: TaskType }>>>(
-            `todo-lists/${todolistId}/tasks`, {title: taskTitle})
+            `todo-lists/${arg.todolistId}/tasks`, {title: arg.title})
     },
     deleteTask(todolistId: string, taskId: string) {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)

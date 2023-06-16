@@ -8,7 +8,7 @@ import {
     removeTodolistTC,
     TodolistDomainType, todolistsActions, updateTitleTodolistTC
 } from "./todolists-reducer";
-import {addTaskTC, removeTaskTC, TasksStateType, updateTaskTC} from "./tasks-reducer";
+import {removeTaskTC, TasksStateType, tasksThunks, updateTaskTC} from "./tasks-reducer";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import {Todolist} from "./Todolist/Todolist";
 import Grid from '@mui/material/Grid';
@@ -36,7 +36,7 @@ export const TodolistsList: React.FC = () => {
     }, [])
 
     const addTask = useCallback((title: string, todolistId: string) => {
-        dispatch(addTaskTC(todolistId, title));
+        dispatch(tasksThunks.addTask({todolistId, title}));
     }, [])
 
     const changeStatus = useCallback((id: string, status: TaskStatuses, todolistId: string) => {
