@@ -2,8 +2,7 @@ import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
 import {useDispatch, useSelector} from "react-redux";
-import {AppStateType} from "./store";
-import {initializeAppTC, RequestStatusType} from "./app-reducer";
+import {initializeAppTC} from "./app-reducer";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -17,6 +16,8 @@ import {Login} from "../features/Auth/Login";
 import {Routes, Route, Navigate} from 'react-router-dom'
 import {CircularProgress} from "@mui/material";
 import { logoutTC } from '../features/Auth/auth-reducer';
+import {selectIsInitialized, selectStatus} from "./app-selectors";
+import {selectIsLoggedIn} from "../features/Auth/auth-selectors";
 
 
 function App() {
@@ -26,9 +27,9 @@ function App() {
         dispatch(initializeAppTC())
     }, [])
 
-    const status = useSelector<AppStateType, RequestStatusType>((state) => state.app.status)
-    const isInitialized = useSelector<AppStateType, boolean>(state => state.app.isInitialized)
-    const isLoggedIn = useSelector<AppStateType, boolean>(state => state.auth.isLoggedIn)
+    const status = useSelector(selectStatus)
+    const isInitialized = useSelector(selectIsInitialized)
+    const isLoggedIn = useSelector(selectIsLoggedIn)
 
     const logoutHandler = useCallback(() => {
         dispatch(logoutTC())
