@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from 'axios'
-import {RequestStatusType} from "../app/app-reducer";
+import {RemoveTaskArgType} from "../features/TodolistsList/tasks-reducer";
 
 // types
 export type TodolistType = {
@@ -37,7 +37,6 @@ export type TaskType = {
     startDate: string | null
     deadline: string | null
     addedDate: string
-    entityStatus: RequestStatusType
 }
 type GetTasksResponseType = {
     items: Array<TaskType>
@@ -93,15 +92,15 @@ export const todolistAPI = {
         return instance.put<{ title: string }, AxiosResponse<ResponseType>>(`todo-lists/${todolistId}`,
             {title: title})
     },
-    getTask(todolistId: string) {
+    getTasks(todolistId: string) {
         return instance.get<GetTasksResponseType>(`todo-lists/${todolistId}/tasks`)
     },
     createTask(arg: AddTaskArgType) {
         return instance.post<{ title: string }, AxiosResponse<ResponseType<{ item: TaskType }>>>(
             `todo-lists/${arg.todolistId}/tasks`, {title: arg.title})
     },
-    deleteTask(todolistId: string, taskId: string) {
-        return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
+    deleteTask(arg: RemoveTaskArgType) {
+        return instance.delete<ResponseType>(`todo-lists/${arg.todolistId}/tasks/${arg.taskId}`)
     },
     updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
         return instance.put<UpdateTaskModelType, AxiosResponse<ResponseType<{ item: TaskType }>>>(

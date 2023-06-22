@@ -45,7 +45,7 @@ export const initializeAppTC = (): AppThunk => (dispatch: AppDispatch) => {
     authAPI.me().then((res) => {
         dispatch(appActions.setIsInitializedAC({isInitialized: true}))
         if (res.data.resultCode === 0) {
-            dispatch(authActions.setIsLoggedInAC({value: true}))
+            dispatch(authActions.setIsLoggedInAC({isLoggedIn: true}))
         } else {
             handleServerAppError(res.data, dispatch)
         }

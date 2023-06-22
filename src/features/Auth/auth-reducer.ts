@@ -1,9 +1,9 @@
 import {Dispatch} from "redux";
 import {authAPI, LoginParamsType} from "../../api/todolist-api";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
-import {todolistsActions} from "../TodolistsList/todolists-reducer";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {appActions} from "../../app/app-reducer";
+import {clearTasksAndTodolists} from "../../common/actions";
 
 //state
 const initialState = {
@@ -14,8 +14,8 @@ const slice = createSlice({
     name: 'auth',
     initialState: initialState,
     reducers: {
-        setIsLoggedInAC(state, action: PayloadAction<{value: boolean}>) {
-            state.isLoggedIn = action.payload.value
+        setIsLoggedInAC(state, action: PayloadAction<{isLoggedIn: boolean}>) {
+            state.isLoggedIn = action.payload.isLoggedIn
         }
     }
 })
@@ -30,7 +30,7 @@ export const loginTC = (payload: LoginParamsType) => (dispatch: Dispatch) => {
     authAPI.login(payload)
         .then((res) => {
             if (res.data.resultCode === 0) {
-                dispatch(authActions.setIsLoggedInAC({value: true}))
+                dispatch(authActions.setIsLoggedInAC({isLoggedIn: true}))
                 dispatch(appActions.setAppStatusAC({status: 'succeeded'}))
             } else {
                 handleServerAppError(res.data, dispatch)
@@ -46,9 +46,9 @@ export const logoutTC = () => (dispatch: Dispatch) => {
     authAPI.logout()
         .then((res) => {
             if (res.data.resultCode === 0) {
-                dispatch(authActions.setIsLoggedInAC({value: false}))
+                dispatch(authActions.setIsLoggedInAC({isLoggedIn: false}))
                 dispatch(appActions.setAppStatusAC({status: 'succeeded'}))
-                dispatch(todolistsActions.clearTodolistDataAC())
+                dispatch(clearTasksAndTodolists())
             } else {
                 handleServerAppError(res.data, dispatch)
             }
