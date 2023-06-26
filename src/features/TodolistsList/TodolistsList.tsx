@@ -2,10 +2,9 @@ import React, {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
     addTodolistTC,
-    fetchTodolistsTC,
     FilterValuesType,
     removeTodolistTC,
-    todolistsActions, updateTitleTodolistTC
+    todolistsActions, todolistsThunks, updateTitleTodolistTC
 } from "./todolists-reducer";
 import {tasksThunks} from "./tasks-reducer";
 import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
@@ -30,7 +29,7 @@ export const TodolistsList: React.FC = () => {
         if (!isLoggedIn) {
             return
         }
-        dispatch(fetchTodolistsTC())
+        dispatch(todolistsThunks.fetchTodolists())
     }, [])
 
     const removeTask = useCallback((taskId: string, todolistId: string) => {

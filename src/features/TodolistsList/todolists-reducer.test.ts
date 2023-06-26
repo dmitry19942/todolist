@@ -1,7 +1,7 @@
 import {
     FilterValuesType,
     TodolistDomainType, todolistsActions,
-    todolistsReducer
+    todolistsReducer, todolistsThunks
 } from './todolists-reducer';
 import {v1} from 'uuid';
 import {RequestStatusType} from "../../app/app-reducer";
@@ -57,6 +57,12 @@ test('correct filter of todolist should be changed', () => {
     expect(endState[0].filter).toBe("all");
     expect(endState[1].filter).toBe(newFilter);
 });
+
+test('todolists should be added', () => {
+    const action = todolistsThunks.fetchTodolists.fulfilled({todolists: startState}, 'requestId')
+    const endState = todolistsReducer([], action)
+    expect(endState.length).toBe(2)
+})
 
 test('correct entity status of todolist should be changed', () => {
 

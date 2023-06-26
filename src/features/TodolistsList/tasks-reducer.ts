@@ -1,4 +1,4 @@
-import {appActions} from "../../app/app-reducer";
+import {appActions, RequestStatusType} from "../../app/app-reducer";
 import {
     AddTaskArgType,
     TaskPriorities,
@@ -8,8 +8,8 @@ import {
     UpdateTaskModelType
 } from "../../api/todolist-api";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
-import {createSlice} from "@reduxjs/toolkit";
-import {todolistsActions} from "./todolists-reducer";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {todolistsActions, todolistsThunks} from "./todolists-reducer";
 import {createAppAsyncThunk} from "../../utils/create-app-async-thunk";
 import {clearTasksAndTodolists} from "../../common/actions";
 
@@ -111,6 +111,7 @@ const removeTask = createAppAsyncThunk<RemoveTaskArgType, RemoveTaskArgType>
     const {dispatch, rejectWithValue} = thunkAPI
     try {
         dispatch(appActions.setAppStatusAC({status: 'loading'}))
+        dispatch(tasksActions.changeTaskEntityStatusAC({todolistId: arg.todolistId, taskId: arg.taskId, entityStatus: 'loading'}))
         const res = await todolistAPI.deleteTask(arg)
         if (res.data.resultCode === 0) {
             dispatch(appActions.setAppStatusAC({status: 'succeeded'}))
@@ -130,7 +131,15 @@ const initialState: TasksStateType = {}
 const slice = createSlice({
         name: 'tasks',
         initialState,
-        reducers: {},
+        reducers: {
+            changeTaskEntityStatusAC(state, action: PayloadAction<{ todolistId: string, taskId: string, entityStatus: RequestStatusType }>) {
+                const tasks = state[action.payload.todolistId]
+                const index = tasks.findIndex(t => t.id === action.payload.taskId)
+                if (index > -1) {
+                    tasks[index] = {...tasks[index], entityStatus: action.payload.entityStatus}
+                }
+            }
+        },
         extraReducers: builder => {
             builder
                 .addCase(fetchTasks.fulfilled, (state, action) => {
@@ -159,7 +168,7 @@ const slice = createSlice({
                 .addCase(todolistsActions.removeTodolistAC, (state, action) => {
                     delete state[action.payload.todolistId]
                 })
-                .addCase(todolistsActions.setTodolistsAC, (state, action) => {
+                .addCase(todolistsThunks.fetchTodolists.fulfilled, (state, action) => {
                     action.payload.todolists.forEach((tl) => {
                         state[tl.id] = []
                     })
@@ -174,6 +183,8 @@ const slice = createSlice({
 export const tasksReducer = slice.reducer;
 
 export const tasksThunks = {fetchTasks, addTask, updateTask, removeTask}
+
+export const tasksActions = slice.actions
 
 
 

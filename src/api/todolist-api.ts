@@ -1,5 +1,6 @@
 import axios, {AxiosResponse} from 'axios'
 import {RemoveTaskArgType} from "../features/TodolistsList/tasks-reducer";
+import {RequestStatusType} from "../app/app-reducer";
 
 // types
 export type TodolistType = {
@@ -37,6 +38,7 @@ export type TaskType = {
     startDate: string | null
     deadline: string | null
     addedDate: string
+    entityStatus: RequestStatusType
 }
 type GetTasksResponseType = {
     items: Array<TaskType>
@@ -78,7 +80,7 @@ const instance = axios.create({
 
 // api
 export const todolistAPI = {
-    getTodolist() {
+    getTodolists() {
         return instance.get<Array<TodolistType>>('todo-lists')
     },
     createTodolist(title: string) {
