@@ -1,6 +1,6 @@
 import {tasksReducer, TasksStateType, tasksThunks} from './tasks-reducer';
 import {TaskPriorities, TaskStatuses} from "../../api/todolist-api";
-import {todolistsActions} from "./todolists-reducer";
+import {todolistsThunks} from "./todolists-reducer";
 
 let startState: TasksStateType = {}
 beforeEach(() => {
@@ -88,7 +88,7 @@ test('title of specified task should be changed', () => {
 
 test('new array should be added when new todolist is added', () => {
 
-    const action = todolistsActions.addTodolistAC({todolist: {id: 'todolistId3', addedDate: '', order: 0, title: ''}});
+    const action = todolistsThunks.addTodolist.fulfilled({todolist: {id: 'todolistId3', addedDate: '', order: 0, title: 'new todolist'}}, 'requestId', 'new todolist');
     const endState = tasksReducer(startState, action)
     const keys = Object.keys(endState);
     const newKey = keys.find(k => k != "todolistId1" && k != "todolistId2");
@@ -102,13 +102,30 @@ test('new array should be added when new todolist is added', () => {
 
 test('property with todolistId should be deleted', () => {
 
-    const action = todolistsActions.removeTodolistAC({todolistId: "todolistId2"});
+    const action = todolistsThunks.removeTodolist.fulfilled({todolistId: "todolistId2"}, 'requestId', 'todolistId2');
     const endState = tasksReducer(startState, action)
     const keys = Object.keys(endState);
 
     expect(keys.length).toBe(1);
     expect(endState["todolistId2"]).not.toBeDefined();
 });
+
+test('empty arrays should be added when we set todolists', () => {
+    const action = todolistsThunks.fetchTodolists.fulfilled({
+        todolists: [
+            {id: '1', title: 'title 1', order: 0, addedDate: ''},
+            {id: '2', title: 'title 2', order: 0, addedDate: ''}
+        ]
+    }, 'requestId')
+
+    const endState = tasksReducer({}, action)
+
+    const keys = Object.keys(endState)
+
+    expect(keys.length).toBe(2)
+    expect(endState['1']).toBeDefined()
+    expect(endState['2']).toBeDefined()
+})
 
 test('tasks should be added for todolist', () => {
     const action = tasksThunks.fetchTasks.fulfilled({

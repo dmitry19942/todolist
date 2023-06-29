@@ -1,9 +1,7 @@
 import React, {useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    addTodolistTC,
     FilterValuesType,
-    removeTodolistTC,
     todolistsActions, todolistsThunks, updateTitleTodolistTC
 } from "./todolists-reducer";
 import {tasksThunks} from "./tasks-reducer";
@@ -54,7 +52,7 @@ export const TodolistsList: React.FC = () => {
     }, [])
 
     const removeTodolist = useCallback((todolistId: string) => {
-        dispatch(removeTodolistTC(todolistId));
+        dispatch(todolistsThunks.removeTodolist(todolistId));
     }, [])
 
     const changeTodolistTitle = useCallback((todolistId: string, title: string) => {
@@ -62,7 +60,7 @@ export const TodolistsList: React.FC = () => {
     }, [])
 
     const addTodolist = useCallback((title: string) => {
-        dispatch(addTodolistTC(title));
+        dispatch(todolistsThunks.addTodolist(title));
     }, [])
 
     if (!isLoggedIn) {
