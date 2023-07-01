@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {initializeAppTC} from "./app-reducer";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,17 +11,18 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import LinearProgress from '@mui/material/LinearProgress';
 import {Menu} from '@mui/icons-material';
-import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
+import {ErrorSnackbar} from "../common/components";
 import {Login} from "../features/Auth/Login";
 import {Routes, Route, Navigate} from 'react-router-dom'
 import {CircularProgress} from "@mui/material";
 import { logoutTC } from '../features/Auth/auth-reducer';
 import {selectIsInitialized, selectStatus} from "./app-selectors";
 import {selectIsLoggedIn} from "../features/Auth/auth-selectors";
+import {useAppDispatch} from "../common/hooks";
 
 
 function App() {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(initializeAppTC())

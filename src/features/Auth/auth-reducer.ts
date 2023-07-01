@@ -1,9 +1,11 @@
 import {Dispatch} from "redux";
-import {authAPI, LoginParamsType} from "../../api/todolist-api";
-import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {appActions} from "../../app/app-reducer";
 import {clearTasksAndTodolists} from "../../common/actions";
+import {handleServerAppError} from "../../common/utils";
+import {handleServerNetworkError} from "../../common/utils";
+import {authAPI, LoginParamsType} from "./auth-api";
+import {ResultCode} from "../../common/enums";
 
 //state
 const initialState = {
@@ -29,7 +31,7 @@ export const loginTC = (payload: LoginParamsType) => (dispatch: Dispatch) => {
     dispatch(appActions.setAppStatusAC({status: 'loading'}))
     authAPI.login(payload)
         .then((res) => {
-            if (res.data.resultCode === 0) {
+            if (res.data.resultCode === ResultCode.Success) {
                 dispatch(authActions.setIsLoggedInAC({isLoggedIn: true}))
                 dispatch(appActions.setAppStatusAC({status: 'succeeded'}))
             } else {
@@ -45,7 +47,7 @@ export const logoutTC = () => (dispatch: Dispatch) => {
     dispatch(appActions.setAppStatusAC({status: 'loading'}))
     authAPI.logout()
         .then((res) => {
-            if (res.data.resultCode === 0) {
+            if (res.data.resultCode === ResultCode.Success) {
                 dispatch(authActions.setIsLoggedInAC({isLoggedIn: false}))
                 dispatch(appActions.setAppStatusAC({status: 'succeeded'}))
                 dispatch(clearTasksAndTodolists())
