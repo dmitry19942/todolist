@@ -2,7 +2,6 @@ import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
 import {useSelector} from "react-redux";
-import {initializeAppTC} from "./app-reducer";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -15,7 +14,7 @@ import {ErrorSnackbar} from "../common/components";
 import {Login} from "../features/Auth/Login";
 import {Routes, Route, Navigate} from 'react-router-dom'
 import {CircularProgress} from "@mui/material";
-import { logoutTC } from '../features/Auth/auth-reducer';
+import {authThunks} from '../features/Auth/auth-reducer';
 import {selectIsInitialized, selectStatus} from "./app-selectors";
 import {selectIsLoggedIn} from "../features/Auth/auth-selectors";
 import {useAppDispatch} from "../common/hooks";
@@ -25,7 +24,7 @@ function App() {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(initializeAppTC())
+        dispatch(authThunks.initializeApp())
     }, [])
 
     const status = useSelector(selectStatus)
@@ -33,7 +32,7 @@ function App() {
     const isLoggedIn = useSelector(selectIsLoggedIn)
 
     const logoutHandler = useCallback(() => {
-        dispatch(logoutTC())
+        dispatch(authThunks.logout())
     }, [])
 
     if (!isInitialized) {

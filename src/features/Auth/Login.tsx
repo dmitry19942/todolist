@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 import {useFormik} from "formik";
 import {useSelector} from "react-redux";
 import {Navigate} from 'react-router-dom'
-import {loginTC} from "./auth-reducer";
+import {authThunks} from "./auth-reducer";
 import {selectIsLoggedIn} from "./auth-selectors";
 import {useAppDispatch} from "../../common/hooks";
 
@@ -47,7 +47,7 @@ export const Login = () => {
             return errors
         },
         onSubmit: values => {
-            dispatch(loginTC(values))
+            dispatch(authThunks.login(values))
             formik.resetForm()
         }
     })
