@@ -1,6 +1,6 @@
 import {appActions} from "../../app/app-reducer";
 import {Dispatch} from "redux";
-import { ResponseType } from '../types/common-types';
+import { ResponseType } from '../types';
 
 export const handleServerAppError = <D>(data: ResponseType<D>, dispatch: Dispatch) => {
     if (data.messages.length) {

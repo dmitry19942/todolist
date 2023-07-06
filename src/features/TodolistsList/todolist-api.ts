@@ -1,7 +1,7 @@
 import {AxiosResponse} from 'axios'
 import {RequestStatusType} from "../../app/app-reducer";
 import { instance } from '../../common/api';
-import { ResponseType } from '../../common/types/common-types';
+import { ResponseType } from '../../common/types';
 import {TaskPriorities, TaskStatuses} from "../../common/enums";
 
 
