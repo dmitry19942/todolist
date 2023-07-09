@@ -5,46 +5,38 @@ import {createAppAsyncThunk, handleServerAppError} from "../../common/utils";
 import {handleServerNetworkError} from "../../common/utils";
 import {authAPI, LoginParamsType} from "./auth-api";
 import {ResultCode} from "../../common/enums";
+import {thunkTryCatch} from "../../common/utils/thunk-try-catch";
 
 //state
 
 const login = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType>
 ('auth/login', async (arg, thunkAPI) => {
     const {dispatch, rejectWithValue} = thunkAPI
-    try {
-        dispatch(appActions.setAppStatusAC({status: 'loading'}))
+    return thunkTryCatch(thunkAPI, async () => {
         const res = await authAPI.login(arg)
         if (res.data.resultCode === ResultCode.Success) {
-            dispatch(appActions.setAppStatusAC({status: 'succeeded'}))
             return {isLoggedIn: true}
         } else {
-            handleServerAppError(res.data, dispatch)
+            const isShowAppError = !res.data.fieldsErrors.length
+            handleServerAppError(res.data, dispatch, isShowAppError)
             return rejectWithValue(res.data)
         }
-    } catch (e) {
-        handleServerNetworkError(e, dispatch)
-        return rejectWithValue(null)
-    }
+    })
 })
 
 const logout = createAppAsyncThunk<{ isLoggedIn: boolean }, void>
 ('auth/logout', async (_, thunkAPI) => {
     const {dispatch, rejectWithValue} = thunkAPI
-    try {
-        dispatch(appActions.setAppStatusAC({status: 'loading'}))
+    return thunkTryCatch(thunkAPI, async () => {
         const res = await authAPI.logout()
         if (res.data.resultCode === ResultCode.Success) {
-            dispatch(appActions.setAppStatusAC({status: 'succeeded'}))
             dispatch(clearTasksAndTodolists())
             return {isLoggedIn: false}
         } else {
             handleServerAppError(res.data, dispatch)
             return rejectWithValue(res.data)
         }
-    } catch (e) {
-        handleServerNetworkError(e, dispatch)
-        return rejectWithValue(null)
-    }
+    })
 })
 
 const initializeApp = createAppAsyncThunk<{ isLoggedIn: true }, void>

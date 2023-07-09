@@ -3,53 +3,42 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {todolistsThunks} from "./todolists-reducer";
 import {createAppAsyncThunk} from "../../common/utils";
 import {clearTasksAndTodolists} from "../../common/actions";
-import {handleServerNetworkError} from "../../common/utils";
 import {handleServerAppError} from "../../common/utils";
 import {AddTaskArgType, RemoveTaskArgType, TaskType, todolistAPI, UpdateTaskModelType} from "./todolist-api";
 import {ResultCode, TaskPriorities, TaskStatuses} from "../../common/enums";
+import {thunkTryCatch} from "../../common/utils/thunk-try-catch";
 
 
 // state
 
 const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[], todolistId: string }, string>
 ('tasks/fetchTasks', async (todolistId: string, thunkAPI) => {
-    const {dispatch, rejectWithValue} = thunkAPI
-    try {
-        dispatch(appActions.setAppStatusAC({status: 'loading'}))
+    return thunkTryCatch(thunkAPI, async () => {
         const res = await todolistAPI.getTasks(todolistId)
         const tasks = res.data.items
-        dispatch(appActions.setAppStatusAC({status: 'succeeded'}))
         return {tasks, todolistId}
-    } catch (e) {
-        handleServerNetworkError(e, dispatch)
-        return rejectWithValue(null)
-    }
+    })
 })
 
 const addTask = createAppAsyncThunk<{ task: TaskType }, AddTaskArgType>
 ('tasks/addTask', async (arg, thunkAPI) => {
     const {dispatch, rejectWithValue} = thunkAPI
-    try {
-        dispatch(appActions.setAppStatusAC({status: 'loading'}))
+    return thunkTryCatch(thunkAPI, async () => {
         const res = await todolistAPI.createTask(arg)
         const task = res.data.data.item
         if (res.data.resultCode === ResultCode.Success) {
-            dispatch(appActions.setAppStatusAC({status: 'succeeded'}))
             return {task}
         } else {
             handleServerAppError(res.data, dispatch)
             return rejectWithValue(null)
         }
-    } catch (e) {
-        handleServerNetworkError(e, dispatch)
-        return rejectWithValue(null)
-    }
+    })
 })
 
 const updateTask = createAppAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>
 ('tasks/updateTask', async (arg, thunkAPI) => {
     const {dispatch, rejectWithValue, getState} = thunkAPI
-    try {
+    return thunkTryCatch(thunkAPI, async () => {
         const tasksForCurrentTodolist = getState().tasks[arg.todolistId]
         const task = tasksForCurrentTodolist.find(t => t.id === arg.taskId)
         if (!task) {
@@ -65,39 +54,29 @@ const updateTask = createAppAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>
             status: task.status,
             ...arg.domainModel
         }
-        dispatch(appActions.setAppStatusAC({status: 'loading'}))
         const res = await todolistAPI.updateTask(arg.todolistId, arg.taskId, apiModel)
         if (res.data.resultCode === ResultCode.Success) {
-            dispatch(appActions.setAppStatusAC({status: 'succeeded'}))
             return arg
         } else {
             handleServerAppError(res.data, dispatch);
             return rejectWithValue(null)
         }
-    } catch (e) {
-        handleServerNetworkError(e, dispatch)
-        return rejectWithValue(null)
-    }
+    })
 })
 
 const removeTask = createAppAsyncThunk<RemoveTaskArgType, RemoveTaskArgType>
 ('tasks/removeTask', async (arg, thunkAPI) => {
     const {dispatch, rejectWithValue} = thunkAPI
-    try {
-        dispatch(appActions.setAppStatusAC({status: 'loading'}))
+    return thunkTryCatch(thunkAPI, async () => {
         dispatch(tasksActions.changeTaskEntityStatusAC({todolistId: arg.todolistId, taskId: arg.taskId, entityStatus: 'loading'}))
         const res = await todolistAPI.deleteTask(arg)
         if (res.data.resultCode === ResultCode.Success) {
-            dispatch(appActions.setAppStatusAC({status: 'succeeded'}))
             return arg
         } else {
             handleServerAppError(res.data, dispatch)
             return rejectWithValue(null)
         }
-    } catch (e) {
-        handleServerNetworkError(e, dispatch)
-        return rejectWithValue(null)
-    }
+    })
 })
 
 const initialState: TasksStateType = {}
