@@ -7,9 +7,9 @@ import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import {Delete} from '@mui/icons-material';
 import {tasksThunks} from "../tasks-reducer";
-import {useAppDispatch} from "../../../common/hooks";
+import {useActions} from "../../../common/hooks";
 import {TaskStatuses} from "../../../common/enums";
-import { TaskType } from '../todolist-api';
+import {TaskType} from '../todolist-api';
 
 type PropsType = {
     todolist: TodolistDomainType
@@ -25,10 +25,10 @@ type PropsType = {
 
 export const Todolist = React.memo(function (props: PropsType) {
 
-    const dispatch = useAppDispatch()
+    const {fetchTasks} = useActions(tasksThunks)
 
     useEffect(() => {
-        dispatch(tasksThunks.fetchTasks(props.todolist.id))
+        fetchTasks(props.todolist.id)
     }, [])
 
     const addTask = useCallback((title: string) => {

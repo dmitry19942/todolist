@@ -36,7 +36,7 @@ export const Login = () => {
         validate: (values) => {
             const errors: FormikErrorType = {}
             if (!values.email) {
-                errors.email = 'Required'
+                errors.email = 'Email is required'
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
                 errors.email = 'Invalid email address'
             }
@@ -59,7 +59,6 @@ export const Login = () => {
                         })
                     }
                 })
-            // formik.resetForm()
         }
     })
 
@@ -74,7 +73,7 @@ export const Login = () => {
                     <FormLabel>
                         <p>To log in get registered
                             <a href={'https://social-network.samuraijs.com/'}
-                               target={'_blank'}> here
+                               target={'_blank'} rel="noreferrer"> here
                             </a>
                         </p>
                         <p>or use common test account credentials:</p>
@@ -102,7 +101,10 @@ export const Login = () => {
                                                              checked={formik.values.rememberMe}
                                                              name='rememberMe'
                                           />}/>
-                        <Button type={'submit'} variant={'contained'} color={'primary'}>
+                        <Button type={'submit'}
+                                variant={'contained'}
+                                disabled={!(formik.isValid && formik.dirty)}
+                                color={'primary'}>
                             Login
                         </Button>
                     </FormGroup>

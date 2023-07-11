@@ -12,13 +12,13 @@ const slice = createSlice({
         name: 'app',
         initialState,
         reducers: {
-            setAppStatusAC(state, action: PayloadAction<{ status: RequestStatusType }>) {
+            setAppStatus(state, action: PayloadAction<{ status: RequestStatusType }>) {
                 state.status = action.payload.status
             },
-            setAppErrorAC(state, action: PayloadAction<{ error: string | null }>) {
+            setAppError(state, action: PayloadAction<{ error: string | null }>) {
                 state.error = action.payload.error
             },
-            setIsInitializedAC(state, action: PayloadAction<{ isInitialized: boolean }>) {
+            setIsInitialized(state, action: PayloadAction<{ isInitialized: boolean }>) {
                 state.isInitialized = action.payload.isInitialized
             }
         }

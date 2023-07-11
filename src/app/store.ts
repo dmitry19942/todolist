@@ -7,7 +7,6 @@ import {authReducer} from "../features/Auth/auth-reducer";
 import {configureStore} from "@reduxjs/toolkit";
 
 
-
 const rootReducer = combineReducers({
     todolists: todolistsReducer,
     tasks: tasksReducer,

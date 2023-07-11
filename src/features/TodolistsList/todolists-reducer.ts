@@ -67,7 +67,7 @@ const slice = createSlice({
         name: 'todolists',
         initialState,
         reducers: {
-            changeTodolistFilterAC(state, action: PayloadAction<{ todolistId: string, filter: FilterValuesType }>) {
+            changeTodolistFilter(state, action: PayloadAction<{ todolistId: string, filter: FilterValuesType }>) {
                 const index = state.findIndex(tl => tl.id === action.payload.todolistId)
                 state[index].filter = action.payload.filter
             },

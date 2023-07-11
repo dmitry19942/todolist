@@ -53,7 +53,7 @@ const initializeApp = createAppAsyncThunk<{ isLoggedIn: true }, void>
         handleServerNetworkError(e, dispatch)
         return rejectWithValue(null)
     } finally {
-        dispatch(appActions.setIsInitializedAC({isInitialized: true}))
+        dispatch(appActions.setIsInitialized({isInitialized: true}))
     }
 })
 

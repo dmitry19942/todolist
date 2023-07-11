@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {TodolistsList} from "../features/TodolistsList/TodolistsList";
 import {useSelector} from "react-redux";
@@ -17,23 +17,23 @@ import {CircularProgress} from "@mui/material";
 import {authThunks} from '../features/Auth/auth-reducer';
 import {selectIsInitialized, selectStatus} from "./app-selectors";
 import {selectIsLoggedIn} from "../features/Auth/auth-selectors";
-import {useAppDispatch} from "../common/hooks";
+import {useActions} from "../common/hooks";
 
 
 function App() {
-    const dispatch = useAppDispatch()
-
-    useEffect(() => {
-        dispatch(authThunks.initializeApp())
-    }, [])
 
     const status = useSelector(selectStatus)
     const isInitialized = useSelector(selectIsInitialized)
     const isLoggedIn = useSelector(selectIsLoggedIn)
 
-    const logoutHandler = useCallback(() => {
-        dispatch(authThunks.logout())
+    const {initializeApp, logout} = useActions(authThunks)
+
+    useEffect(() => {
+        initializeApp()
     }, [])
+
+    const logoutHandler = () => logout()
+
 
     if (!isInitialized) {
         return <div
