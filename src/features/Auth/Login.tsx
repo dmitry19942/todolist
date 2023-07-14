@@ -12,7 +12,7 @@ import {useSelector} from "react-redux";
 import {Navigate} from 'react-router-dom'
 import {authThunks} from "./auth-reducer";
 import {selectIsLoggedIn} from "./auth-selectors";
-import {useAppDispatch} from "../../common/hooks";
+import {useActions} from "../../common/hooks";
 import {LoginParamsType} from "./auth-api";
 import {ResponseType} from "../../common/types";
 
@@ -24,7 +24,7 @@ type FormikErrorType = {
 
 export const Login = () => {
 
-    const dispatch = useAppDispatch()
+    const {login} = useActions(authThunks)
     const isLoggedIn = useSelector(selectIsLoggedIn)
 
     const formik = useFormik({
@@ -49,7 +49,7 @@ export const Login = () => {
             return errors
         },
         onSubmit: (values: LoginParamsType, formikHelpers: FormikHelpers<LoginParamsType>) => {
-            dispatch(authThunks.login(values))
+            login(values)
                 .unwrap()
                 .catch((reason: ResponseType) => {
                     const {fieldsErrors} = reason

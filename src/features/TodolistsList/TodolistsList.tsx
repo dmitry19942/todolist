@@ -34,7 +34,7 @@ export const TodolistsList: React.FC = () => {
         if (!isLoggedIn) {
             return
         }
-        fetchTodolists()
+        fetchTodolists({})
     }, [])
 
     const removeTask = useCallback((taskId: string, todolistId: string) => {
