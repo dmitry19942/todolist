@@ -3,9 +3,9 @@ import {appActions} from "../../app/app-reducer";
 import {clearTasksAndTodolists} from "../../common/actions";
 import {createAppAsyncThunk, handleServerAppError} from "../../common/utils";
 import {handleServerNetworkError} from "../../common/utils";
-import {authAPI, LoginParamsType} from "./auth-api";
 import {ResultCode} from "../../common/enums";
 import {thunkTryCatch} from "../../common/utils/thunk-try-catch";
+import {authAPI, LoginParamsType} from "./auth-api";
 
 //state
 

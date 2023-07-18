@@ -1,25 +1,22 @@
 import React, {useCallback, useEffect} from 'react';
-import {AddItemForm} from "../../../common/components";
-import {EditableSpan} from "../../../common/components";
+import {AddItemForm} from "../../../../common/components";
+import {EditableSpan} from "../../../../common/components";
 import {Task} from "./Task/Task";
 import {FilterValuesType, TodolistDomainType} from "../todolists-reducer";
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import {Delete} from '@mui/icons-material';
-import {tasksThunks} from "../tasks-reducer";
-import {useActions} from "../../../common/hooks";
-import {TaskStatuses} from "../../../common/enums";
-import {TaskType} from '../todolist-api';
+import {tasksThunks} from "../../tasks/tasks-reducer";
+import {useActions} from "../../../../common/hooks";
+import {TaskStatuses} from "../../../../common/enums";
+import { TaskType } from '../../tasks/tasks-api';
 
 type PropsType = {
     todolist: TodolistDomainType
     tasks: Array<TaskType>
-    removeTask: (taskId: string, todolistId: string) => void
     changeFilter: (todolistId: string, value: FilterValuesType) => void
     addTask: (title: string, todolistId: string) => void
-    changeTaskStatus: (taskId: string, status: TaskStatuses, todolistId: string) => void
     removeTodolist: (todolistId: string) => void
-    changeTaskTitle: (id: string, title: string, todolistId: string) => void
     changeTodolistTitle: (id: string, title: string) => void
 }
 
@@ -70,9 +67,6 @@ export const Todolist = React.memo(function (props: PropsType) {
             {
                 tasksForTodolist.map(t => <Task
                     task={t}
-                    changeTaskTitle={props.changeTaskTitle}
-                    changeTaskStatus={props.changeTaskStatus}
-                    removeTask={props.removeTask}
                     todolistId={props.todolist.id}
                     key={t.id}
                 />)

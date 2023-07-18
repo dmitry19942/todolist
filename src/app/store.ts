@@ -1,9 +1,9 @@
 import {combineReducers} from "redux";
-import {tasksReducer} from "../features/TodolistsList/tasks-reducer";
-import {todolistsReducer} from "../features/TodolistsList/todolists-reducer";
+import {tasksReducer} from "../features/todolists-list/tasks/tasks-reducer";
+import {todolistsReducer} from "../features/todolists-list/todolists/todolists-reducer";
 import thunk from "redux-thunk";
 import {appReducer} from "./app-reducer";
-import {authReducer} from "../features/Auth/auth-reducer";
+import {authReducer} from "../features/auth/auth-reducer";
 import {configureStore} from "@reduxjs/toolkit";
 
 

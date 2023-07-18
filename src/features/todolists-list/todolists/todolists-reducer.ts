@@ -1,11 +1,11 @@
-import {RequestStatusType} from "../../app/app-reducer";
+import {RequestStatusType} from "../../../app/app-reducer";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {clearTasksAndTodolists} from "../../common/actions";
-import {createAppAsyncThunk} from "../../common/utils";
-import {handleServerAppError} from "../../common/utils";
+import {clearTasksAndTodolists} from "../../../common/actions";
+import {createAppAsyncThunk} from "../../../common/utils";
+import {handleServerAppError} from "../../../common/utils";
 import {todolistAPI, TodolistType, UpdateTodolistTitleArgType} from "./todolist-api";
-import { ResultCode } from "../../common/enums";
-import {thunkTryCatch} from "../../common/utils/thunk-try-catch";
+import { ResultCode } from "../../../common/enums";
+import {thunkTryCatch} from "../../../common/utils/thunk-try-catch";
 
 
 //state

@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import {TodolistsList} from "../features/TodolistsList/TodolistsList";
+import {TodolistsList} from "../features/todolists-list/TodolistsList";
 import {useSelector} from "react-redux";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,13 +11,13 @@ import Container from '@mui/material/Container';
 import LinearProgress from '@mui/material/LinearProgress';
 import {Menu} from '@mui/icons-material';
 import {ErrorSnackbar} from "../common/components";
-import {Login} from "../features/Auth/Login";
 import {Routes, Route, Navigate} from 'react-router-dom'
 import {CircularProgress} from "@mui/material";
-import {authThunks} from '../features/Auth/auth-reducer';
+import {authThunks} from '../features/auth/auth-reducer';
 import {selectIsInitialized, selectStatus} from "./app-selectors";
-import {selectIsLoggedIn} from "../features/Auth/auth-selectors";
+import {selectIsLoggedIn} from "../features/auth/auth-selectors";
 import {useActions} from "../common/hooks";
+import {Login} from "../features/auth/Login";
 
 
 function App() {

@@ -1,26 +1,11 @@
 import {AxiosResponse} from 'axios'
-import {RequestStatusType} from "../../app/app-reducer";
-import { instance } from '../../common/api';
-import { ResponseType } from '../../common/types';
-import {TaskPriorities, TaskStatuses} from "../../common/enums";
-
+import { instance } from '../../../common/api';
+import { ResponseType } from '../../../common/types';
+import {TaskPriorities, TaskStatuses} from "../../../common/enums";
+import {RequestStatusType} from "../../../app/app-reducer";
 
 // api
-export const todolistAPI = {
-    getTodolists() {
-        return instance.get<Array<TodolistType>>('todo-lists')
-    },
-    createTodolist(title: string) {
-        return instance.post<{ title: string }, AxiosResponse<ResponseType<{ item: TodolistType }>>>('todo-lists',
-            {title: title})
-    },
-    deleteTodolist(todolistId: string) {
-        return instance.delete<ResponseType>(`todo-lists/${todolistId}`)
-    },
-    updateTodolist(arg: UpdateTodolistTitleArgType) {
-        return instance.put<{ title: string }, AxiosResponse<ResponseType>>(`todo-lists/${arg.todolistId}`,
-            {title: arg.title})
-    },
+export const tasksApi = {
     getTasks(todolistId: string) {
         return instance.get<GetTasksResponseType>(`todo-lists/${todolistId}/tasks`)
     },
@@ -38,14 +23,7 @@ export const todolistAPI = {
 }
 
 
-
 // types
-export type TodolistType = {
-    id: string
-    addedDate: string
-    order: number
-    title: string
-}
 export type TaskType = {
     id: string
     title: string
@@ -59,7 +37,7 @@ export type TaskType = {
     addedDate: string
     entityStatus: RequestStatusType
 }
-type GetTasksResponseType = {
+export type GetTasksResponseType = {
     items: Array<TaskType>
     totalCount: number
     error: string | null
@@ -73,10 +51,6 @@ export type UpdateTaskModelType = {
     deadline: string | null
 }
 export type AddTaskArgType = {
-    todolistId: string
-    title: string
-}
-export type UpdateTodolistTitleArgType = {
     todolistId: string
     title: string
 }

@@ -4,7 +4,7 @@ import {
     todolistsReducer, todolistsThunks
 } from './todolists-reducer';
 import {v1} from 'uuid';
-import {RequestStatusType} from "../../app/app-reducer";
+import {RequestStatusType} from "../../../app/app-reducer";
 
 let todolistId1: string;
 let todolistId2: string;
