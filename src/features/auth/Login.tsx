@@ -11,10 +11,10 @@ import {FormikHelpers, useFormik} from "formik";
 import {useSelector} from "react-redux";
 import {Navigate} from 'react-router-dom'
 import {useActions} from "../../common/hooks";
-import {ResponseType} from "../../common/types";
-import { authThunks } from './auth-reducer';
-import {selectIsLoggedIn} from "./auth-selectors";
 import {LoginParamsType} from "./auth-api";
+import {ResponseType} from "../../common/types";
+import {authThunks} from "./auth-reducer";
+import {selectIsLoggedIn} from "./auth-selectors";
 
 export const Login = () => {
 

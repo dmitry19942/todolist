@@ -11,13 +11,13 @@ import Container from '@mui/material/Container';
 import LinearProgress from '@mui/material/LinearProgress';
 import {Menu} from '@mui/icons-material';
 import {ErrorSnackbar} from "../common/components";
+import {Login} from "../features/auth/Login";
 import {Routes, Route, Navigate} from 'react-router-dom'
 import {CircularProgress} from "@mui/material";
 import {authThunks} from '../features/auth/auth-reducer';
 import {selectIsInitialized, selectStatus} from "./app-selectors";
 import {selectIsLoggedIn} from "../features/auth/auth-selectors";
 import {useActions} from "../common/hooks";
-import {Login} from "../features/auth/Login";
 
 
 function App() {
