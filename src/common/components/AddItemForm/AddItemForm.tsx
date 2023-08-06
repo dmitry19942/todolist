@@ -2,51 +2,59 @@ import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import {AddBox} from '@mui/icons-material';
+import {ResponseType} from "../../types";
 
 type AddItemFormPropsType = {
-    addItem: (title: string) => void
+    addItem: (title: string) => Promise<any>
     disabled?: boolean
 }
 
 export const AddItemForm = React.memo(({addItem, disabled = false}: AddItemFormPropsType) => {
-    let [newTaskTitle, setNewTaskTitle] = useState<string>("")
-    let [error, setError] = useState<boolean>(false)
+    let [title, setTitle] = useState<string>('')
+    let [error, setError] = useState<string | null>(null)
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setError(false)
-        setNewTaskTitle(e.currentTarget.value)
+        setTitle(e.currentTarget.value)
     }
 
-    const addTask = () => {
-        if (newTaskTitle.trim() !== '') {
-            addItem(newTaskTitle.trim());
+    const addItemHandler = () => {
+        if (title.trim() !== '') {
+            addItem(title)
+                .then(() => {
+                    setTitle('')
+                })
+                .catch((res: ResponseType) => {
+                    setError(res.messages[0])
+                })
         } else {
-            setError(true);
+            setError('Title is required');
         }
-        setNewTaskTitle('')
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (error !== null) {
+            setError(null);
+        }
         if (e.key === 'Enter') {
-            addTask();
+            addItemHandler();
         }
     }
 
     return (
         <div>
             <TextField
-                value={newTaskTitle}
+                value={title}
                 onChange={onChangeHandler}
                 onKeyPress={onKeyPressHandler}
                 disabled={disabled}
                 size={'small'}
-                error={error}
-                helperText={error && 'Title is required!'}
+                error={!!error}
+                helperText={error}
                 label={'Title'}
                 variant={'outlined'}
             />
             <IconButton
-                onClick={addTask}
+                onClick={addItemHandler}
                 color={'primary'}
                 disabled={disabled}
             >

@@ -22,7 +22,7 @@ export const Todolist: FC<PropsType> = memo(({todolist, tasks}) => {
     }, [])
 
     const addTaskCallback = (title: string) => {
-        addTask({todolistId: todolist.id, title});
+        return  addTask({todolistId: todolist.id, title}).unwrap()
     }
 
     return <div>
