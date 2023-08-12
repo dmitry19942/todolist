@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC} from "react";
+import React, {ChangeEvent, FC, memo} from "react";
 import {EditableSpan} from "../../../../../../common/components";
 import { Delete } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
@@ -15,7 +15,7 @@ type PropsType = {
     todolistId: string
 }
 
-export const Task: FC<PropsType> = React.memo (({task, todolistId}) => {
+export const Task: FC<PropsType> = memo (({task, todolistId}) => {
 
     const {removeTask, updateTask} = useActions(tasksThunks)
 

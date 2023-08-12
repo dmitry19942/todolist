@@ -17,7 +17,7 @@ export const TodolistsList: React.FC = () => {
     const tasks = useSelector(selectTasks)
     const isLoggedIn = useSelector(selectIsLoggedIn)
 
-    const { fetchTodolists, addTodolist} = useActions(todolistsThunks)
+    const {fetchTodolists, addTodolist} = useActions(todolistsThunks)
 
     useEffect(() => {
         if (!isLoggedIn) {
@@ -27,7 +27,7 @@ export const TodolistsList: React.FC = () => {
     }, [])
 
     const addTodolistCallback = (title: string) => {
-        return  addTodolist(title).unwrap()
+        return addTodolist(title).unwrap()
     }
 
     if (!isLoggedIn) {

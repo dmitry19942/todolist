@@ -1,15 +1,15 @@
-import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
+import React, {ChangeEvent, useState, KeyboardEvent, FC, memo} from 'react';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import {AddBox} from '@mui/icons-material';
 import {RejectValueType} from "../../utils/create-app-async-thunk";
 
-type AddItemFormPropsType = {
+type PropsType = {
     addItem: (title: string) => Promise<any>
     disabled?: boolean
 }
 
-export const AddItemForm = React.memo(({addItem, disabled = false}: AddItemFormPropsType) => {
+export const AddItemForm: FC<PropsType> = memo(({addItem, disabled = false}) => {
     let [title, setTitle] = useState<string>('')
     let [error, setError] = useState<string | null>(null)
 

@@ -30,8 +30,7 @@ const logout = createAppAsyncThunk<{ isLoggedIn: boolean }, void>
 })
 
 const initializeApp = createAppAsyncThunk<{ isLoggedIn: true }, void>
-('app/initializeApp', async (_, thunkAPI) => {
-    const {dispatch, rejectWithValue} = thunkAPI
+('app/initializeApp', async (_, {dispatch, rejectWithValue}) => {
     try {
         const res = await authAPI.me()
         if (res.data.resultCode === ResultCode.Success) {
@@ -68,6 +67,7 @@ const slice = createSlice({
 
 export const authReducer = slice.reducer
 export const authThunks = {login, logout, initializeApp}
+
 
 
 
