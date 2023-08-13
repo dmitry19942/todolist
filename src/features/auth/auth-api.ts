@@ -13,6 +13,9 @@ export const authAPI = {
     },
     me() {
         return instance.get<ResponseType<GetAuthMeType>>('auth/me')
+    },
+    getCaptchaUrl() {
+        return instance.get('security/get-captcha-url')
     }
 }
 

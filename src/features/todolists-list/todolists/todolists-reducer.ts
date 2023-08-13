@@ -5,8 +5,7 @@ import {createAppAsyncThunk} from "../../../common/utils";
 import {todolistAPI, TodolistType, UpdateTodolistTitleArgType} from "./todolist-api";
 import { ResultCode } from "../../../common/enums";
 
-
-//state
+// state
 
 const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, void>
 ('todolists/fetchTodolists', async () => {
@@ -84,6 +83,7 @@ const slice = createSlice({
         }
     }
 )
+
 export const todolistsReducer = slice.reducer
 
 export const todolistsThunks = {fetchTodolists, removeTodolist, addTodolist, changeTodolistTitle}

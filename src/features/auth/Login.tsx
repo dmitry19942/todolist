@@ -14,12 +14,13 @@ import {useActions} from "../../common/hooks";
 import {LoginParamsType} from "./auth-api";
 import {ResponseType} from "../../common/types";
 import {authThunks} from "./auth-reducer";
-import {selectIsLoggedIn} from "./auth-selectors";
+import {selectCaptcha, selectIsLoggedIn} from "./auth-selectors";
 
 export const Login = () => {
 
     const {login} = useActions(authThunks)
     const isLoggedIn = useSelector(selectIsLoggedIn)
+    const captcha = useSelector(selectCaptcha)
 
     const formik = useFormik({
         initialValues: {
@@ -95,6 +96,13 @@ export const Login = () => {
                                                              checked={formik.values.rememberMe}
                                                              name='rememberMe'
                                           />}/>
+                        {captcha !== null && <img src={captcha} alt=''/>}
+                        {captcha !== null && <TextField type="captcha"
+                                                        label="Captcha"
+                                                        margin="normal"
+                                                        {...formik.getFieldProps('captcha')}
+                                                        onBlur={formik.handleBlur}
+                        />}
                         <Button type={'submit'}
                                 variant={'contained'}
                                 disabled={!(formik.isValid && formik.dirty)}

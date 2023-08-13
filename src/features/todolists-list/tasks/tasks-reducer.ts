@@ -6,7 +6,6 @@ import {clearTasksAndTodolists} from "../../../common/actions";
 import {ResultCode, TaskPriorities, TaskStatuses} from "../../../common/enums";
 import {AddTaskArgType, RemoveTaskArgType, tasksApi, TaskType, UpdateTaskModelType} from "./tasks-api";
 
-
 // state
 
 const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[], todolistId: string }, string>
@@ -124,7 +123,7 @@ export const tasksThunks = {fetchTasks, addTask, updateTask, removeTask}
 
 export const tasksActions = slice.actions
 
-//types
+// types
 type UpdateDomainTaskModelType = {
     title?: string
     description?: string
