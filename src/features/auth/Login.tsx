@@ -7,55 +7,17 @@ import FormGroup from '@mui/material/FormGroup';
 import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import {FormikHelpers, useFormik} from "formik";
 import {useSelector} from "react-redux";
 import {Navigate} from 'react-router-dom'
-import {useActions} from "../../common/hooks";
-import {LoginParamsType} from "./auth-api";
-import {ResponseType} from "../../common/types";
-import {authThunks} from "./auth-reducer";
 import {selectCaptcha, selectIsLoggedIn} from "./auth-selectors";
+import {useLogin} from "../../common/hooks";
 
 export const Login = () => {
 
-    const {login} = useActions(authThunks)
+    const {formik} = useLogin()
+
     const isLoggedIn = useSelector(selectIsLoggedIn)
     const captcha = useSelector(selectCaptcha)
-
-    const formik = useFormik({
-        initialValues: {
-            email: '',
-            password: '',
-            rememberMe: false
-        },
-        validate: (values) => {
-            const errors: Partial<Omit<LoginParamsType, 'captcha'>> = {}
-            if (!values.email) {
-                errors.email = 'Email is required'
-            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-                errors.email = 'Invalid email address'
-            }
-
-            if (!values.password) {
-                errors.password = 'Required'
-            } else if (values.password.length < 4) {
-                errors.password = 'Must be 4 characters or more'
-            }
-            return errors
-        },
-        onSubmit: (values: LoginParamsType, formikHelpers: FormikHelpers<LoginParamsType>) => {
-            login(values)
-                .unwrap()
-                .catch((reason: ResponseType) => {
-                    const {fieldsErrors} = reason
-                    if (fieldsErrors) {
-                        reason.fieldsErrors.forEach((fieldError) => {
-                            formikHelpers.setFieldError(fieldError.field, fieldError.error)
-                        })
-                    }
-                })
-        }
-    })
 
     if (isLoggedIn) {
         return <Navigate to={'/'}/>
