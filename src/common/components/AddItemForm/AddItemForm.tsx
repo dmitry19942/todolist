@@ -1,8 +1,8 @@
-import React, {ChangeEvent, useState, KeyboardEvent, FC, memo} from 'react';
+import React, {FC, memo} from 'react';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import {AddBox} from '@mui/icons-material';
-import {RejectValueType} from "../../utils/create-app-async-thunk";
+import {useAddItemForm} from "../../hooks";
 
 type PropsType = {
     addItem: (title: string) => Promise<any>
@@ -10,38 +10,8 @@ type PropsType = {
 }
 
 export const AddItemForm: FC<PropsType> = memo(({addItem, disabled = false}) => {
-    let [title, setTitle] = useState<string>('')
-    let [error, setError] = useState<string | null>(null)
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
-    }
-
-    const addItemHandler = () => {
-        if (title.trim() !== '') {
-            addItem(title)
-                .then(() => {
-                    setTitle('')
-                })
-                .catch((err: RejectValueType) => {
-                    if (err.data) {
-                        const messages = err.data.messages
-                        setError(messages.length ? messages[0] : 'Some error occurred')
-                    }
-                })
-        } else {
-            setError('Title is required');
-        }
-    }
-
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (error !== null) {
-            setError(null);
-        }
-        if (e.key === 'Enter') {
-            addItemHandler();
-        }
-    }
+    const {title, onChangeHandler, onKeyPressHandler, error, addItemHandler} = useAddItemForm(addItem)
 
     return (
         <div>

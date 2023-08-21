@@ -1,5 +1,6 @@
-import React, {ChangeEvent, useState, KeyboardEvent, FC, memo} from 'react';
+import React, {FC, memo} from 'react';
 import TextField from '@mui/material/TextField';
+import {useEditableSpan} from "../../hooks";
 
 type PropsType = {
     title: string
@@ -9,28 +10,14 @@ type PropsType = {
 
 export const EditableSpan: FC<PropsType> = memo(({title, changeTitle, disabled = false}) => {
 
-    let [editMode, setEditMode] = useState<boolean>(false)
-    let [newTitle, setNewTitle] = useState<string>(title)
-
-    const changeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewTitle(e.currentTarget.value)
-    }
-    const onEditMode = () => {
-        if (disabled) {
-            return
-        }
-        setEditMode(true)
-    }
-    const offEditMode = () => {
-        setEditMode(false)
-        changeTitle(newTitle)
-    }
-
-    const onKeyPressOffEditMode = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            offEditMode();
-        }
-    }
+    const {
+        editMode,
+        newTitle,
+        onEditMode,
+        offEditMode,
+        changeTitleHandler,
+        onKeyPressOffEditMode
+    } = useEditableSpan(title, changeTitle, disabled)
 
     return (
         editMode
