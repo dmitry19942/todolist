@@ -1,12 +1,11 @@
-import React, {FC, memo, useEffect} from 'react';
+import React, {FC, memo} from 'react';
 import {AddItemForm} from "../../../../common/components";
 import {TodolistDomainType} from "../todolists-reducer";
-import {tasksThunks} from "../../tasks/tasks-reducer";
-import {useActions} from "../../../../common/hooks";
 import { TaskType } from '../../tasks/tasks-api';
 import {FilterTasksButtons} from "./FilterTasksButtons/FilterTasksButtons";
 import {Tasks} from "./Tasks/Tasks";
 import {TodolistTitle} from "./TodolistTitle/TodolistTitle";
+import {useTodolist} from "../../../../common/hooks";
 
 type PropsType = {
     todolist: TodolistDomainType
@@ -15,15 +14,7 @@ type PropsType = {
 
 export const Todolist: FC<PropsType> = memo(({todolist, tasks}) => {
 
-    const {fetchTasks, addTask} = useActions(tasksThunks)
-
-    useEffect(() => {
-        fetchTasks(todolist.id)
-    }, [])
-
-    const addTaskCallback = (title: string) => {
-        return  addTask({todolistId: todolist.id, title}).unwrap()
-    }
+    const {addTaskCallback} = useTodolist(todolist)
 
     return <div>
         <TodolistTitle todolist={todolist}/>

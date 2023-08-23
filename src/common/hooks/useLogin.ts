@@ -45,6 +45,6 @@ export const useLogin = () => {
     })
 
     return {
-        formik,
+        formik
     }
 }

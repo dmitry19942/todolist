@@ -1,24 +1,17 @@
 import React, {FC, memo} from "react";
 import {Task} from "./Task/Task";
-import {TaskStatuses} from "../../../../../common/enums";
 import {TaskType} from "../../../tasks/tasks-api";
 import {TodolistDomainType} from "../../todolists-reducer";
+import {useTasks} from "../../../../../common/hooks";
 
 type PropsType = {
     todolist: TodolistDomainType
     tasks: TaskType[]
 }
 
-export const Tasks: FC<PropsType> = memo(({tasks, todolist}) => {
+export const Tasks: FC<PropsType> = memo(({todolist, tasks}) => {
 
-    let tasksForTodolist = tasks
-
-    if (todolist.filter === "active") {
-        tasksForTodolist = tasks.filter(t => t.status === TaskStatuses.New);
-    }
-    if (todolist.filter === "completed") {
-        tasksForTodolist = tasks.filter(t => t.status === TaskStatuses.Completed);
-    }
+    const {tasksForTodolist} = useTasks(todolist, tasks)
 
     return (
         <>{tasksForTodolist.map(t => <Task task={t} todolistId={todolist.id} key={t.id}/>)}</>

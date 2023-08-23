@@ -1,13 +1,12 @@
-import React, {ChangeEvent, FC, memo} from "react";
+import React, {FC, memo} from "react";
 import {EditableSpan} from "../../../../../../common/components";
 import { Delete } from '@mui/icons-material';
 import IconButton from '@mui/material/IconButton';
 import Checkbox from '@mui/material/Checkbox';
 import { TaskStatuses } from "../../../../../../common/enums";
 import {TaskType} from "../../../../tasks/tasks-api";
-import {useActions} from "../../../../../../common/hooks";
-import {tasksThunks} from "../../../../tasks/tasks-reducer";
 import s from './styles.module.css'
+import {useTask} from "../../../../../../common/hooks";
 
 
 type PropsType = {
@@ -17,19 +16,7 @@ type PropsType = {
 
 export const Task: FC<PropsType> = memo (({task, todolistId}) => {
 
-    const {removeTask, updateTask} = useActions(tasksThunks)
-
-    const removeTaskHandler = () => removeTask({taskId: task.id, todolistId})
-
-    const changeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        const status = e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New
-        updateTask({todolistId, taskId: task.id, domainModel: {status}}
-           );
-    }
-
-    const changeTitleHandler = (title: string) => {
-        updateTask({todolistId, taskId: task.id, domainModel: {title}});
-    }
+    const {changeStatusHandler, changeTitleHandler, removeTaskHandler} = useTask(task, todolistId)
 
     return <div key={task.id} className={task.status === TaskStatuses.Completed ? s.isDone : ""}>
         <Checkbox

@@ -19,8 +19,6 @@ export const Header = () => {
 
     const {logout} = useActions(authThunks)
 
-    const logoutHandler = () => logout({})
-
     return (
         <AppBar position="static">
             <Toolbar>
@@ -31,7 +29,7 @@ export const Header = () => {
                     News
                 </Typography>
                 {!isLoggedIn && <Button color="inherit">Login</Button>}
-                {isLoggedIn && <Button color='inherit' onClick={logoutHandler}>Logout</Button>}
+                {isLoggedIn && <Button color='inherit' onClick={() => logout({})}>Logout</Button>}
             </Toolbar>
             {status === 'loading' && <LinearProgress/>}
         </AppBar>
